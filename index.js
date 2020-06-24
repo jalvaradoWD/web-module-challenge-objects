@@ -36,6 +36,8 @@ and should return a number.
 
 For example, burger.discount("teacher") would return 13.5 and burger.discount("public") would return 16.2*/
 
+// When using the arrow function, the "this" keyword is no longer needed for referencing other key values within an objects method.
+
 const createMenuItem2 = (name, cost, category) => {
   return {
     name,
@@ -125,8 +127,8 @@ and should return a string in the format `{name} gave the restaurant a {rating},
  * For example, if getReviewByIndex is invoked with reviews and the number 0
  * it will return `Daniela gave the restaurant a 5 star review and their feedback was: Beautiful atmosphere and wonderful vegan options!`
 */
-function getReviewByIndex(reviews, index) {
-  const foundReview = reviews[index];
+function getReviewByIndex(reviewsArray, index) {
+  const foundReview = reviewsArray[index];
 
   const { name, rating, feedback } = foundReview;
 
@@ -144,16 +146,16 @@ and should return a string in the format `name} gave the restaurant a {rating}, 
 
 For example, if getLastReview is invoked passing the reviews array it will return `Reyna gave the restaurant a 3.5 star review and their feedback was: "this place is chill with really cool people, great for getting work done on weekdays"`.
 */
-function getLastReview(reviews) {
-  const lastIndex = reviews.length;
-  const foundReview = reviews[lastIndex - 1];
+function getLastReview(reviewsArray) {
+  const lastIndex = reviewsArray.length;
+  const foundReview = reviewsArray[lastIndex - 1];
 
   const { name, rating, feedback } = foundReview;
 
   return `${name} gave the restaurant a ${rating}, and their feedback was: ${feedback}`;
 }
 
-console.log(getLastReview(reviews));
+// console.log(getLastReview(reviews));
 
 ///////////////🍔☕️🍽 STRETCH🍔☕️🍽////////////////////
 
@@ -169,9 +171,22 @@ console.log(getLastReview(reviews));
     {name:"Lauren", rating: 4, feedback: "Absolutely love that they have karaoke Fridays! Food and drink selection is okay."}]
 */
 
-function getReviewByRating(/* code here */) {
-  /* code here */
+function getReviewByRating(reviewsArray, rating) {
+  const reviewsLength = reviewsArray.length;
+  const foundReviews = [];
+
+  for (let i = 0; i < reviewsLength; i++) {
+    const review = reviewsArray[i];
+
+    if (review.rating >= rating && review.rating < rating + 1) {
+      foundReviews.push(review);
+    }
+  }
+
+  return foundReviews;
 }
+
+// console.log(getReviewByRating(reviews, 4));
 
 /** STRETCH 2: Write a function called 'getLongestReview' that returns an array containing all reviews longer than 15 words. 
   
@@ -186,9 +201,23 @@ and should return an array of objects.
     {name: "Brett", rating: 3, feedback: "great selection of snacks and a nice cafe area to get work done during the day."},
     {name: "Julius", rating: 2, feedback: "I was largely unimpressed by this venue. Nothing special on the menu and too expensive. The atmosphere is polarizing, and not for me, but I think some would like it." }]
 */
-function getLongReviews(/* code here */) {
-  /* code here */
+function getLongReviews(reviewsArray) {
+  const reviewsLength = reviewsArray.length;
+  const foundReviews = [];
+
+  for (let i = 0; i < reviewsLength; i++) {
+    const review = reviewsArray[i];
+    const feedBackWordCount = review.feedback.split(" ").length;
+
+    if (feedBackWordCount > 15) {
+      foundReviews.push(review);
+    }
+  }
+
+  return foundReviews;
 }
+
+// console.log(getLongReviews(reviews));
 
 /* STRETCH 3:  This challenge is not related to the data above! 
 
@@ -207,6 +236,17 @@ The returned object should have the following characteristics:
          (2) returns the updated value of the `odometer`.
 */
 
-function carMaker(/* code here */) {
-  /* code here */
+function carMaker(odometer) {
+  return {
+    odometer,
+    drive: (distance) => {
+      odometer += distance;
+      return odometer;
+    },
+  };
 }
+
+const test = carMaker(10);
+
+// console.log(test);
+// console.log(test.drive(15));
